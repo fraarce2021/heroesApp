@@ -13,16 +13,22 @@ export class SearchComponent  {
 
   term:string='';
   heroes: Hero[] = [];
-  selectedHero!: Hero;
+  selectedHero: Hero | undefined;
 
   constructor(private heroesService:HeroesService) { }
 
   searching():void{
-      this.heroesService.getSuggestion(this.term)
+      this.heroesService.getSuggestion(this.term.trim())
       .subscribe(heroes => this.heroes = heroes);
   }
 
   selectedOption(event: MatAutocompleteSelectedEvent):void{
+
+    if(!event.option.value){
+      this.selectedHero = undefined;
+      return;
+    }
+
     const hero: Hero = event.option.value;
     this.term = hero.superhero;
 
