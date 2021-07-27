@@ -1,1 +1,66 @@
-<p>add works!</p>
+<h1>
+    {{ (hero.id) ? 'Editing' : 'New' }} Hero
+    <small>{{hero.superhero}}</small>
+</h1>
+
+<div fxLayout="row" fxLayout.xs="column" fxLayoutGap="40px">
+
+    <div fxFlex="50" fxLayout="column">
+
+        <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="20px">
+            <mat-form-field fxFlex="50" fxLayout.xs="column">
+                <mat-label>Superhero</mat-label>
+                <input [(ngModel)]="hero.superhero" matInput type="text" required>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="50">
+                <mat-label>Alter Ego</mat-label>
+                <input [(ngModel)]="hero.alter_ego" matInput type="text" required>
+            </mat-form-field>
+        </div>
+
+        <mat-form-field>
+            <mat-label>First Appearance</mat-label>
+            <input [(ngModel)]="hero.first_appearance" matInput type="text" required>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Characters</mat-label>
+            <input [(ngModel)]="hero.characters" matInput type="text" required>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Created by</mat-label>
+            <mat-select [(ngModel)]="hero.publisher" required>
+                <mat-option *ngFor="let publisher of publishers" [value]="publisher.id">{{publisher.desc}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>URL Image</mat-label>
+            <input [(ngModel)]="hero.alt_img" matInput type="url" required>
+        </mat-form-field>
+
+        <br>
+
+        <div fxLayout>
+            <button (click)="save()" mat-raised-button color="primary">
+            <mat-icon>save</mat-icon>
+            {{ (hero.id) ? 'Update' : 'Create' }}
+          </button>
+            <span class="spacer"></span>
+            <button *ngIf="hero.id" (click)="delete()" mat-raised-button color="warn">
+            <mat-icon>delete</mat-icon>
+            Delete
+          </button>
+        </div>
+
+
+
+    </div>
+
+    <div fxFlex="50">
+        <img [src]="hero | heroImage">
+    </div>
+
+</div>
